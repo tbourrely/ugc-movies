@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "lint": "eslint"
+  },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.12"
+    "cheerio": "^1.0.0-rc.12",
+    "discord.js": "^14.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.40.0"
   }
 }
