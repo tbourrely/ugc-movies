@@ -57,9 +57,17 @@ const getTomorrowDate = () => {
 
 async function main() {
   const date = getTomorrowDate();
-  const cinemaId = 36;
+  const theaters = {
+    'confluence': 36,
+    'partDieu': 58,
+  };
 
-  const movies = await getMovies(date, cinemaId);
+  // FIXME: parallelize requests
+  const movies = {};
+  for (const theater in theaters) {
+    movies[theater] = await getMovies(date, theaters[theater]);
+  }
+
   console.log(movies);
 };
 
