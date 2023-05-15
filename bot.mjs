@@ -1,6 +1,6 @@
 // Require the necessary discord.js classes
 import { Client, Events, GatewayIntentBits } from 'discord.js';
-import config from './config.json' assert { type: 'json' };
+import config from './config.json';
 
 const token = config.token;
 
