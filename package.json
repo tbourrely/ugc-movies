@@ -9,7 +9,9 @@
     "lint:fix": "eslint --ext .mjs,.js --fix .",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "bot": "nodemon bot.mjs",
+    "deploy_commands": "node deploy-commands.mjs"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
@@ -21,6 +23,7 @@
     "@babel/plugin-syntax-import-assertions": "^7.20.0",
     "eslint": "^8.40.0",
     "husky": "^8.0.3",
+    "nodemon": "^2.0.22",
     "vitest": "^0.31.0"
   }
 }
