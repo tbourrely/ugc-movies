@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "lint": "eslint --ext .mjs,.js .",
     "lint:fix": "eslint --ext .mjs,.js --fix .",
@@ -15,6 +16,9 @@
     "discord.js": "^14.11.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.8",
+    "@babel/eslint-parser": "^7.21.8",
+    "@babel/plugin-syntax-import-assertions": "^7.20.0",
     "eslint": "^8.40.0",
     "husky": "^8.0.3",
     "vitest": "^0.31.0"
