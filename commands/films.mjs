@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { theaters, getMovies, formatList, splitFormattedList, filterStartTimeAfter } from '../lib/theaters.mjs';
+import { theaters, getMovies, formatList, splitFormattedList, filterStartTimeAfter, filterLanguage } from '../lib/theaters.mjs';
 import { getTomorrowDate, fromDayMonth } from '../lib/date.mjs';
 import { isValid } from '../lib/time.mjs';
 import { MAX_MESSAGE_LENGTH } from '../constants.js';
@@ -27,11 +27,20 @@ export default {
 				.setDescription('Heure de debut (18:30)')
 				.setMinLength(5)
 				.setMaxLength(5),
+		)
+		.addStringOption(option =>
+			option.setName('langue')
+				.setDescription('langue du film')
+				.addChoices(
+					{ name: 'vf', value: 'VF' },
+					{ name: 'vostf', value: 'VOSTF' },
+				),
 		),
 	async execute(interaction) {
 		const cinemaInput = interaction.options.getNumber('cinema');
 		const dateInput = interaction.options.getString('date');
 		const startAfterInput = interaction.options.getString('start_after');
+		const langueInput = interaction.options.getString('langue');
 
 		const date = dateInput ? fromDayMonth(dateInput) : getTomorrowDate();
 
@@ -44,6 +53,10 @@ export default {
 
 		if (startAfterInput && isValid(startAfterInput)) {
 			rawMovieList = filterStartTimeAfter(rawMovieList, startAfterInput);
+		}
+
+		if (langueInput) {
+			rawMovieList = filterLanguage(rawMovieList, langueInput);
 		}
 
 		const formatted = formatList(rawMovieList);
