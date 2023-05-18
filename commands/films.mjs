@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { theaters, getMovies, formatList, splitFormattedList } from '../lib/theaters.mjs';
-import { getTomorrowDate } from '../lib/date.mjs';
+import { getTomorrowDate, fromDayMonth } from '../lib/date.mjs';
 import { MAX_MESSAGE_LENGTH } from '../constants.js';
 
 const cinemaChoices = Object.keys(theaters).map(element => ({ name: element, value: theaters[element] }));
@@ -14,11 +14,26 @@ export default {
 				.setDescription('Le cinema')
 				.setRequired(true)
 				.addChoices(...cinemaChoices),
+		)
+		.addStringOption(option =>
+			option.setName('date')
+				.setDescription('Date souhaitee (31/12)')
+				.setMinLength(5)
+				.setMaxLength(5),
 		),
 	async execute(interaction) {
-		const cinema = interaction.options.getNumber('cinema');
+		const cinemaInput = interaction.options.getNumber('cinema');
+		const dateInput = interaction.options.getString('date');
 
-		const rawMovieList = await getMovies(getTomorrowDate(), cinema);
+		const date = dateInput ? fromDayMonth(dateInput) : getTomorrowDate();
+
+		const rawMovieList = await getMovies(date, cinemaInput);
+
+		if (rawMovieList.length == 0) {
+			await interaction.reply('Pas de films pour cette date (ou pas encore...)');
+			return;
+		}
+
 		const formatted = formatList(rawMovieList);
 		const parts = splitFormattedList(formatted, MAX_MESSAGE_LENGTH);
 		const firstPart = parts.shift();
