@@ -23,7 +23,7 @@ export default {
 				.setMaxLength(5),
 		)
 		.addStringOption(option =>
-			option.setName('start_after')
+			option.setName('debut')
 				.setDescription('Heure de debut (18:30)')
 				.setMinLength(5)
 				.setMaxLength(5),
@@ -39,17 +39,12 @@ export default {
 	async execute(interaction) {
 		const cinemaInput = interaction.options.getNumber('cinema');
 		const dateInput = interaction.options.getString('date');
-		const startAfterInput = interaction.options.getString('start_after');
+		const startAfterInput = interaction.options.getString('debut');
 		const langueInput = interaction.options.getString('langue');
 
 		const date = dateInput ? fromDayMonth(dateInput) : getTomorrowDate();
 
 		let rawMovieList = await getMovies(date, cinemaInput);
-
-		if (rawMovieList.length == 0) {
-			await interaction.reply('Pas de films pour cette date (ou pas encore...)');
-			return;
-		}
 
 		if (startAfterInput && isValid(startAfterInput)) {
 			rawMovieList = filterStartTimeAfter(rawMovieList, startAfterInput);
@@ -57,6 +52,11 @@ export default {
 
 		if (langueInput) {
 			rawMovieList = filterLanguage(rawMovieList, langueInput);
+		}
+
+		if (rawMovieList.length == 0) {
+			await interaction.reply('Pas de films (ou pas encore...)');
+			return;
 		}
 
 		const formatted = formatList(rawMovieList);
