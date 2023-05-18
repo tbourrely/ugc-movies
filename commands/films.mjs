@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { theaters, getMovies, formatList } from '../lib/theaters.mjs';
+import { theaters, getMovies, formatList, splitFormattedList } from '../lib/theaters.mjs';
 import { getTomorrowDate } from '../lib/date.mjs';
+import { MAX_MESSAGE_LENGTH } from '../constants.js';
 
 const cinemaChoices = Object.keys(theaters).map(element => ({ name: element, value: theaters[element] }));
 
@@ -16,9 +17,15 @@ export default {
 		),
 	async execute(interaction) {
 		const cinema = interaction.options.getNumber('cinema');
+
 		const rawMovieList = await getMovies(getTomorrowDate(), cinema);
 		const formatted = formatList(rawMovieList);
-		await interaction.reply(formatted);
-		// FIXME: max length issue with part dieu
+		const parts = splitFormattedList(formatted, MAX_MESSAGE_LENGTH);
+		const firstPart = parts.shift();
+
+		await interaction.reply(firstPart);
+		for (const part of parts) {
+			await interaction.followUp(part);
+		}
 	},
 };
