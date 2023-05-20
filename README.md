@@ -1,4 +1,6 @@
-# parse-ugc
+# UGC movies
+
+![status](https://github.com/tbourrely/ugc-movies/actions/workflows/workflow/badge.svg)
 
 ## Getting started
 
