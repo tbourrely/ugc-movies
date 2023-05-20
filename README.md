@@ -1,6 +1,6 @@
 # UGC movies
 
-![status](https://github.com/tbourrely/ugc-movies/actions/workflows/workflow/badge.svg)
+![status](https://github.com/tbourrely/ugc-movies/actions/workflows/workflow.yaml/badge.svg)
 
 ## Getting started
 
