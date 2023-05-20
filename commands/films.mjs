@@ -13,7 +13,6 @@ export default {
 		.addNumberOption(option =>
 			option.setName('cinema')
 				.setDescription('Le cinema')
-				.setRequired(true)
 				.addChoices(...cinemaChoices),
 		)
 		.addStringOption(option =>
@@ -44,7 +43,8 @@ export default {
 
 		const date = dateInput ? fromDayMonth(dateInput) : getTomorrowDate();
 
-		let rawMovieList = await getMovies(date, cinemaInput);
+		const theatersToFetch = cinemaInput === null ? Object.values(theaters) : [cinemaInput];
+		let rawMovieList = await getMovies(date, theatersToFetch);
 
 		if (startAfterInput && isValid(startAfterInput)) {
 			rawMovieList = filterStartTimeAfter(rawMovieList, startAfterInput);
