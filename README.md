@@ -58,12 +58,26 @@ yarn deploy_commands
 
 ## Available commands
 
+> At the moment, commands are developed with french users in mind.
+
 ### cinemas
 
 List supported theaters
+
+Usage:
+
+```
+/cinemas
+```
 
 ### films
 
 Get the list of movies available in a theater.
 
-You can filter by start time, language and search for a given date.
+You can filter by theater, date, start time, language.
+
+Usage:
+
+```
+/films <cinema> <date> <debut> <langue>
+```
