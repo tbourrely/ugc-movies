@@ -45,7 +45,9 @@ yarn lint:fix
 ### Run bot
 
 ```
-yarn bot
+yarn bot:dev # run with nodemon
+# or
+yarn bot:prod # run with pm2
 ```
 
 ### Update commands (dispatch changes to discord API)
