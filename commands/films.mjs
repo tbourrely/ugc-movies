@@ -63,6 +63,7 @@ export default {
 		const parts = splitFormattedList(formatted, MAX_MESSAGE_LENGTH);
 		const firstPart = parts.shift();
 
+		// FIXME: interaction has already been replied error
 		await interaction.reply(firstPart);
 		for (const part of parts) {
 			await interaction.followUp(part);
