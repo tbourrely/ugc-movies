@@ -81,3 +81,9 @@ Usage:
 ```
 /films <cinema> <date> <debut> <langue>
 ```
+
+Default values:
+- `cinema`: `null`, will fetch data to all theaters and merge the results
+- `date`: `null`, get **next day** movie list
+- `debut`: `null`, no filtering applied
+- `langue`: `null`, no filtering applied
